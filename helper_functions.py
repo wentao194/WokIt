@@ -8,13 +8,14 @@ class GooglePlaces(object):
         super(GooglePlaces, self).__init__()
         self.apiKey = apiKey
 
-    def search_places_by_coordinate(self, location, radius, types):
+    def search_places_by_coordinate(self, location, radius, addy, name):
         endpoint_url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json"
         places = []
         params = {
             'location': location,
             'radius': radius,
-            'types': types,
+            'query': addy,
+            'name' : name,
             'key': self.apiKey
         }
         res = requests.get(endpoint_url, params = params)
@@ -40,8 +41,8 @@ def get_place_details(place_id, fields):
     place_details =  json.loads(res.content)
     return place_details
 
-def google_review(lat,lng):
+def google_review(lat,lng,address,name):
     api = GooglePlaces("AIzaSyBlcH-tkt7e6JqIPGKFxo6WM84KbANBEhc")
     location = lat+","+lng
-    places = api.search_places_by_coordinate( location, "10", "restaurant")
+    places = api.search_places_by_coordinate( location, "5", address, name)
     return places

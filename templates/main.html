@@ -4,11 +4,17 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <title>Compare</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="{{ url_for('static', filename='css/mycss.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
     <style>
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
       #map {
-        height: 50%;
+        height: 100%;
       }
       /* Optional: Makes the sample page fill the window. */
       html, body {
@@ -18,28 +24,65 @@
       }
     </style>
   </head>
-  <body>
-    <div>
-      <p>{{ restaurant_id }}</p>
+  <body style="overflow: hidden">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+        <a class="navbar-brand" href="http://178.128.71.30">WokIt</a>
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+        </ul>
+        <form action="/home/" method="POST" class="form-inline my-2 my-lg-0">
+          <input input id="pac-input" class="form-control mr-sm-2" name="address" type="text" placeholder="Restaurant name..." aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </div>
+    </nav>
+    <div class="split right">
+<!--       <p>{{ restaurant_id }}</p>
       <p>{{ restaurant_review }}</p>
-      <p>{{ places }}</p>
-      <ul>
+      <p>{{ places }}</p> -->
+<!--       <ul class="sidebar top">
+        <li>Restaurant</li>
         <li>Name: {{ name }}</li>
         <li>Website: {{ website }}</li>
         <li>Address: {{ addy }}</li>
         <li>Phone Number: {{ phone_number }}</li>
-      </ul>
+      </ul> -->
+      <div class="sidebar top">
+        <div class="jumbotron side">
+          <div class="container">
+            <h1 class="display-4">{{ name }}</h1>
+            <a class="lead" href="{{ website }}">Website</a></p>
+            <p class="lead">Address: {{ addy }}</p>
+            <p class="lead">Phone: {{ phone_number }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar bottom side2">
+      <p class="site">Yelp Reviews</p>
+      {% for review in yelp_reviews %}
+        <ul>
+          <li><img src={{ review['user']['image_url'] }} alt="Smiley face" height="42" width="42" style="border-radius: 50%;">&nbsp&nbsp&nbsp<strong>{{ review['user']['name'] }}</strong></li>
+          <li class="star"><span class="stars" data-rating="{{ review['rating'] }}" data-num-stars="5" ></span></li>
+          <li>{{ review['text'] }}</li>
+<!--           <li>Time: {{ review['time_created'] }}</li>
+ -->    </ul>
+      {% endfor %}
+      <p class="site">Google Reviews</p>
       {% for review in reviews %}
         <ul>
-          <li>Author Name: {{ review['author_name'] }}</li>
-          <li>Rating: {{ review['rating'] }}</li>
-          <li>Text: {{ review['text'] }}</li>
-          <li>Time: {{ review['relative_time_description'] }}</li>
-          <li>Profile Photo: {{ review['profile_photo_url'] }}</li>
-        </ul>
-      {% endfor %}
+          <li><img src={{ review['profile_photo_url'] }} alt="Smiley face" height="42" width="42" >&nbsp&nbsp&nbsp<strong>{{ review['author_name'] }}</strong></li>
+          <li class="star"><span class="stars" data-rating="{{ review['rating'] }}" data-num-stars="5" ></span></li>
+          <li>{{ review['text'] }}</li>
+<!--           <li>Time: {{ review['relative_time_description'] }}</li>
+ -->    </ul>
+      {% endfor %}  
     </div>
-    <div id="map"></div>
+    </div>
+    <div class="split left" id="map"></div>
     <script>
       function initMap() {
         var myLatLng = {lat: {{ lat }}, lng: {{ lng }}};
@@ -59,5 +102,10 @@
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBlcH-tkt7e6JqIPGKFxo6WM84KbANBEhc&callback=initMap">
     </script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='my.js') }}"></script>
+
   </body>
 </html>
