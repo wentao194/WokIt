@@ -79,7 +79,10 @@ def homepage():
         map_info = map_info.json()
 
         # Extracting Google Maps Search Info which will be used to get Yelp's Restaurant Review
-        lat = map_info["results"][0]["geometry"]["location"]["lat"]
+        try:
+            lat = map_info["results"][0]["geometry"]["location"]["lat"]
+        except:
+        	return render_template("index.html")
         lng = map_info["results"][0]["geometry"]["location"]["lng"]
         addresslst = address.split(',')
         name = addresslst[0]
