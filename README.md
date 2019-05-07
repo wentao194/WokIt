@@ -5,6 +5,6 @@ Here are a list of programming languages and tools used to bring this website to
 
 Programming Languages: JavaScript, and Python. 
 
-Framework & Web: HTML, CSS, Bootstrap, Flask
+Framework & Web: HTML, CSS, Bootstrap, Flask, jQuery
 
-Tools: Git, Visual Studio, Google REST API, Yelp REST API, Digital Oean
+Tools: Git, Visual Studio, Google REST API, Yelp REST API, Digital Ocean
